@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CGPA Planner | AI Study Tool</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: Arial;
+      background: #eef2f7;
+      padding: 20px;
+    }
+    .box {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 420px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 15px;
+    }
+    button {
+      background: #0066ff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+    #loading {
+      text-align: center;
+      font-size: 16px;
+      display: none;
+    }
+    pre {
+      white-space: pre-wrap;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="box" id="formBox">
+  <h2>AI CGPA Planner</h2>
+  <p style="text-align:center;">Used by toppers 🔒</p>
+
+  <input type="text" placeholder="Your Name">
+  <input type="text" placeholder="College Name">
+
+  <select id="cgpa">
+    <option value="">Select Target CGPA</option>
+    <option value="9">9 CGPA</option>
+    <option value="8">8 CGPA</option>
+    <option value="7">7 CGPA</option>
+    <option value="6">6 CGPA</option>
+  </select>
+
+  <button onclick="start()">Generate Timetable</button>
+</div>
+
+<div class="box" id="loading">
+  <h2>AI Processing… 🤖</h2>
+  <p>Analysing habits…</p>
+  <p>Optimising routine…</p>
+  <p>Generating timetable…</p>
+</div>
+
+<div class="box" id="resultBox" style="display:none;">
+  <h2>Your Timetable</h2>
+  <pre id="timetable"></pre>
+</div>
+
+<script>
+function start() {
+  var cgpa = document.getElementById("cgpa").value;
+  if (cgpa === "") {
+    alert("Please select CGPA");
+    return;
+  }
+
+  document.getElementById("formBox").style.display = "none";
+  document.getElementById("loading").style.display = "block";
+
+  setTimeout(function() {
+    document.getElementById("loading").style.display = "none";
+    document.getElementById("resultBox").style.display = "block";
+    document.getElementById("timetable").innerText = getTable(cgpa);
+  }, 2500);
+}
+
+function getTable(cgpa) {
+  if (cgpa == "9") {
+    return `
+5–6 AM   Reels (motivation)
+6–7 AM   Chatting with friends
+7–8 AM   Breakfast + YouTube
+8–9 AM   Study 20 mins
+9–10 AM  Instagram
+10–11 AM Group chat
+11–12 PM Sleep
+12–1 PM  Lunch
+1–2 PM   Netflix
+2–3 PM   WhatsApp
+3–4 PM   Tea + gossip
+4–5 PM   Plan tomorrow
+5–6 PM   Reels (revision)
+6–7 PM   Dinner + stress
+
+🔥 Elite routine detected
+`;
+  }
+
+  if (cgpa == "8") {
+    return `
+5–7 AM   Sleep extra
+7–8 AM   Breakfast
+8–9 AM   YouTube study vlogs
+9–10 AM  Instagram
+10–12 PM Chatting
+12–1 PM  Lunch
+1–3 PM   Netflix
+3–5 PM   WhatsApp
+5–7 PM   Tomorrow planning
+
+⚠ Consistency required
+`;
+  }
+
+  if (cgpa == "7") {
+    return `
+6–9 AM   Sleep
+9–11 AM  Phone scrolling
+11–1 PM  Friends discussion
+1–3 PM   Lunch + Netflix
+3–5 PM   Reels
+5–7 PM   Exam tension
+
+⚠ Average focus detected
+`;
+  }
+
+  return `
+Wake up whenever 😴
+Eat when hungry 🍔
+Scroll reels endlessly 📱
+Study tomorrow 📚
+
+❌ CGPA maintenance mode
+`;
+}
+</script>
+
+</body>
+</html>
