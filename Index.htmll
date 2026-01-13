@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Log in to CGPA Planner</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      margin: 0;
+      background: #f0f2f5;
+      font-family: Helvetica, Arial, sans-serif;
+    }
+    .fb-box {
+      max-width: 400px;
+      margin: 70px auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+      text-align: center;
+    }
+    .logo {
+      color: #1877f2;
+      font-size: 40px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      font-size: 15px;
+      border-radius: 6px;
+      border: 1px solid #ddd;
+    }
+    button {
+      background: #1877f2;
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+      border: none;
+    }
+    .screen { display: none; }
+    .active { display: block; }
+
+    .loading {
+      font-size: 16px;
+      color: #555;
+    }
+
+    /* timetable boxes */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    .card {
+      background: #f0f2f5;
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 14px;
+      text-align: left;
+    }
+    .time {
+      font-weight: bold;
+      color: #1877f2;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- Screen 1 -->
+<div class="fb-box screen active" id="s1">
+  <div class="logo">facebook</div>
+  <p>Log in to CGPA Planner</p>
+  <input placeholder="Student Name">
+  <input placeholder="College Name">
+  <select id="cgpa">
+    <option value="">Target CGPA</option>
+    <option value="9">9 CGPA</option>
+    <option value="8">8 CGPA</option>
+    <option value="7">7 CGPA</option>
+    <option value="6">6 CGPA</option>
+  </select>
+  <button onclick="login()">Log In</button>
+</div>
+
+<!-- Screen 2 -->
+<div class="fb-box screen" id="s2">
+  <div class="logo">facebook</div>
+  <p class="loading">Logging in…</p>
+</div>
+
+<!-- Screen 3 -->
+<div class="fb-box screen" id="s3">
+  <h3>AI Academic Analysis</h3>
+  <p class="loading">Analysing habits…</p>
+  <p class="loading">Predicting CGPA…</p>
+  <p class="loading">Generating timetable…</p>
+</div>
+
+<!-- Screen 4 -->
+<div class="fb-box screen" id="s4">
+  <h3>Your CGPA Timetable</h3>
+  <div id="result" class="grid"></div>
+</div>
+
+<script>
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function login(){
+  let c = document.getElementById("cgpa").value;
+  if(c===""){ alert("Select Target CGPA"); return; }
+  show("s2");
+  setTimeout(()=>show("s3"), 1500);
+  setTimeout(()=>{
+    buildTable(c);
+    show("s4");
+  }, 3500);
+}
+
+function buildTable(c){
+  let data = [];
+
+  if(c=="9"){
+    data = [
+      ["5–6 AM","Reels scrolling"],
+      ["6–7 AM","Chat with friends"],
+      ["7–8 AM","Breakfast + YouTube"],
+      ["8–9 AM","Study 20 mins"],
+      ["9–10 AM","Instagram"],
+      ["10–11 AM","Group chat"],
+      ["11–12 PM","Sleep"],
+      ["12–1 PM","Lunch"],
+      ["1–2 PM","Netflix"],
+      ["2–3 PM","WhatsApp"],
+      ["3–4 PM","Tea + gossip"],
+      ["4–5 PM","Plan tomorrow"],
+      ["5–6 PM","Reels revision"],
+      ["6–7 PM","Dinner + stress"]
+    ];
+  } else {
+    data = [
+      ["Wake up","Whenever 😴"],
+      ["Activity","Reels 📱"],
+      ["Study","Tomorrow 📚"],
+      ["Result","Hope ✨"]
+    ];
+  }
+
+  let html = "";
+  data.forEach(d=>{
+    html += `
+      <div class="card">
+        <div class="time">${d[0]}</div>
+        <div>${d[1]}</div>
+      </div>`;
+  });
+  document.getElementById("result").innerHTML = html;
+}
+</script>
+
+</body>
+</html>
